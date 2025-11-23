@@ -1,0 +1,67 @@
+﻿@model GameStoreMVC.Models.ProductoModel
+
+@{
+    ViewData["Title"] = "Registrar Juego";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white text-center py-3">
+                    <h4 class="mb-0 fw-bold">REGISTRAR NUEVO JUEGO</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre del Videojuego</label>
+                            <input asp-for="Nombre" class="form-control" placeholder="Ej: God of War Ragnarok" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Descripción Corta</label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="2" placeholder="Breve reseña del juego..."></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Precio (S/)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">S/</span>
+                                    <input asp-for="Precio" type="number" step="0.01" class="form-control" placeholder="0.00" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Stock Inicial</label>
+                                <input asp-for="Stock" type="number" class="form-control" placeholder="Cantidad disponible" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">URL de la Imagen (Portada)</label>
+                            <input asp-for="ImagenUrl" class="form-control" placeholder="https://..." />
+                            <div class="form-text">Busca la imagen en Google, clic derecho "Copiar dirección de imagen" y pega aquí.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">ID de Categoría</label>
+                            <select asp-for="IdCategoria" class="form-select">
+                                <option value="1">1 - Juegos PS5</option>
+                                <option value="2">2 - Juegos Switch</option>
+                                <option value="3">3 - Consolas</option>
+                                <option value="4">4 - Accesorios</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                            <button type="submit" class="btn btn-success px-5">Guardar Producto</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
