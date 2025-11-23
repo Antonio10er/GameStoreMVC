@@ -4,9 +4,9 @@
 > **Ciclo:** 5to | **Aula:** A301
 
 ## 📄 Descripción del Proyecto
-Este proyecto consiste en el desarrollo de una plataforma web E-commerce diseñada para la venta y gestión de videojuegos. [cite_start]El objetivo es digitalizar el proceso comercial de una tienda minorista, permitiendo administrar inventarios y ofrecer a los clientes un catálogo accesible las 24 horas[cite: 11, 12, 15].
+Este proyecto consiste en el desarrollo de una plataforma web E-commerce diseñada para la venta y gestión de videojuegos. El objetivo es digitalizar el proceso comercial de una tienda minorista, permitiendo administrar inventarios y ofrecer a los clientes un catálogo accesible las 24 horas.
 
-[cite_start]El sistema busca solucionar la problemática de la gestión manual en pequeños negocios gamer, aprovechando el crecimiento del mercado digital donde el 70% de los jóvenes prefiere comprar en línea[cite: 24, 27].
+El sistema busca solucionar la problemática de la gestión manual en pequeños negocios gamer, aprovechando el crecimiento del mercado digital donde el 70% de los jóvenes prefiere comprar en línea.
 
 ## 🚀 Tecnologías Utilizadas
 
@@ -19,11 +19,11 @@ Este proyecto consiste en el desarrollo de una plataforma web E-commerce diseña
 
 ## ⚙️ Funcionalidades Principales
 
-### 🛒 Módulo Público (Cliente)
+### 🛒 Módulo Público
 * **Catálogo de Productos:** Visualización de videojuegos disponibles con tarjetas interactivas (Imagen, Precio, Stock).
 * **Diseño Responsivo:** Adaptable a móviles y escritorio.
 
-### 🛠️ Módulo Administrativo (Intranet)
+### 🛠️ Módulo Administrativo
 * **Gestión de Productos:** Registro de nuevos videojuegos con validación de datos (Nombre, Descripción, Precio, Stock, Imagen).
 * **Control de Stock:** Visualización rápida de unidades disponibles.
 
