@@ -13,7 +13,7 @@ namespace GameStoreMVC.Data
             _cadenaSQL = configuration.GetConnectionString("CadenaSQL");
         }
 
-        public async Task<List<ProductoModel>> ListarProductosAsync()
+        public async Task<List<ProductoModel>> ObtenerProductosAsync()
         {
             List<ProductoModel> lista = new List<ProductoModel>();
 

@@ -1,7 +1,12 @@
+using GameStoreMVC.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Registrar el repositorio ADO.NET
+builder.Services.AddScoped<ProductoRepository>();
 
 var app = builder.Build();
 
