@@ -60,16 +60,37 @@ INSERT INTO tb_categoria (descripcion) VALUES ('Accesorios');
 -- insertar productos
 -- nota: las urls son para las imagenes
 INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
-VALUES ('EA Sports FC 26', 'El juego de fútbol más popular del mundo.', 229.00, 50, 'https://media.falabella.com/falabellaPE/120426163_01/w=1500,h=1500,fit=pad', 1);
+VALUES ('EA Sports FC 26', 'El juego de fútbol más popular del mundo.', 229.00, 6, 'https://media.falabella.com/falabellaPE/120426163_01/w=1500,h=1500,fit=pad', 1);
 
 INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
-VALUES ('Super Mario Bros. Wonder', 'La nueva aventura de Mario en 2D.', 199.00, 30, 'https://media.falabella.com/falabellaPE/125259955_01/w=1500,h=1500,fit=pad', 2);
+VALUES ('Super Mario Bros. Wonder', 'La nueva aventura de Mario en 2D.', 199.00, 10, 'https://media.falabella.com/falabellaPE/125259955_01/w=1500,h=1500,fit=pad', 2);
 
 INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
-VALUES ('PlayStation 5 Slim', 'Consola PS5 versión estándar con lector.', 2499.00, 10, 'https://media.falabella.com/falabellaPE/137340461_01/w=800,h=800,fit=pad', 3);
+VALUES ('PlayStation 5 Slim', 'Consola PS5 versión estándar con lector.', 2499.00, 5, 'https://media.falabella.com/falabellaPE/137340461_01/w=800,h=800,fit=pad', 3);
 
 INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
-VALUES ('Mando DualSense White', 'Control inalámbrico para PS5.', 269.00, 25, 'https://coolboxpe.vtexassets.com/arquivos/ids/179118-800-800?v=638810280116930000&width=800&height=800&aspect=true', 4);
+VALUES ('Mando DualSense White', 'Control inalámbrico para PS5.', 269.00, 15, 'https://coolboxpe.vtexassets.com/arquivos/ids/179118-800-800?v=638810280116930000&width=800&height=800&aspect=true', 4);
+
+-- 2 Accesorios
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Teclado Mecánico Redragon Kumara', 'Teclado mecánico RGB para gaming.', 189.00, 8, 'https://www.necdigitalstore.com/files/images/productos/1702565554-teclado-redragon-kumara-k552-mecanico-sw-blue-rgb-negro-0.webp', 4);
+
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Mouse Gamer Logitech G203', 'Mouse gamer RGB de alta precisión.', 109.00, 20, 'https://coolboxpe.vtexassets.com/arquivos/ids/238587-800-800?v=638978673883370000&width=800&height=800&aspect=true', 4);
+
+-- 2 juegos ps5
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Gran Turismo 7', 'Simulador de carreras exclusivo de PS5.', 209.00, 7, 'https://hiraoka.com.pe/media/catalog/product/p/s/ps5_gt7_ste_pksht_lt_rgb_la_211220.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=560&width=700&canvas=700:560', 1);
+
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Spider-Man 2', 'Aventura de acción con Peter Parker y Miles Morales.', 239.00, 12, 'https://media.falabella.com/falabellaPE/125259841_01/w=1500,h=1500,fit=pad', 1);
+
+-- 2 juegos de switch
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Animal Crossing: New Horizons', 'Simulador de vida en una isla.', 209.00, 15, 'https://media.falabella.com/falabellaPE/113895639_01/w=1500,h=1500,fit=pad', 2);
+
+INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) 
+VALUES ('Super Smash Bros. Ultimate', 'Peleas con los personajes de Nintendo.', 189.00, 8, 'https://media.falabella.com/falabellaPE/120426051_01/w=1500,h=1500,fit=pad', 2);
 
 -- insertar un usuario de prueba (admin)
 INSERT INTO tb_usuario (nombre_completo, correo, clave, es_admin)

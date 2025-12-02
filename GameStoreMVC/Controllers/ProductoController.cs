@@ -36,5 +36,49 @@ namespace GameStoreMVC.Controllers
             await productoRepo.AgregarProductoAsync(productoModel);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var producto = await productoRepo.ObtenerProductoPorIdAsync(id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+            return View(producto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ProductoModel productoModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(productoModel);
+            }
+            await productoRepo.ActualizarProductoAsync(productoModel);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var producto = await productoRepo.ObtenerProductoPorIdAsync(id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+            return View(producto);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await productoRepo.EliminarProductoAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

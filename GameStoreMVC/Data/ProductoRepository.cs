@@ -62,5 +62,67 @@ namespace GameStoreMVC.Data
                 await cmd.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task<ProductoModel> ObtenerProductoPorIdAsync(int id)
+        {
+            ProductoModel producto = null;
+
+            using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT * FROM tb_producto WHERE id_producto = @id", conexion);
+                cmd.Parameters.AddWithValue("@id", id);
+                await conexion.OpenAsync();
+
+                using (SqlDataReader dr = await cmd.ExecuteReaderAsync())
+                {
+                    if (await dr.ReadAsync())
+                    {
+                        producto = new ProductoModel
+                        {
+                            IdProducto = Convert.ToInt32(dr["id_producto"]),
+                            Nombre = dr["nombre"].ToString(),
+                            Descripcion = dr["descripcion"].ToString(),
+                            Precio = Convert.ToDecimal(dr["precio"]),
+                            Stock = Convert.ToInt32(dr["stock"]),
+                            ImagenUrl = dr["imagen_url"].ToString(),
+                            IdCategoria = Convert.ToInt32(dr["id_categoria"])
+                        };
+                    }
+                }
+            }
+            return producto;
+        }
+
+        public async Task ActualizarProductoAsync(ProductoModel p)
+        {
+            string query = "UPDATE tb_producto SET nombre=@nom, descripcion=@des, precio=@pre, stock=@sto, imagen_url=@img, id_categoria=@cat WHERE id_producto=@id";
+
+            using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
+            {
+                SqlCommand cmd = new SqlCommand(query, conexion);
+                cmd.Parameters.AddWithValue("@nom", p.Nombre);
+                cmd.Parameters.AddWithValue("@des", p.Descripcion);
+                cmd.Parameters.AddWithValue("@pre", p.Precio);
+                cmd.Parameters.AddWithValue("@sto", p.Stock);
+                cmd.Parameters.AddWithValue("@img", p.ImagenUrl ?? "");
+                cmd.Parameters.AddWithValue("@cat", p.IdCategoria);
+                cmd.Parameters.AddWithValue("@id", p.IdProducto);
+
+                await conexion.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
+        public async Task EliminarProductoAsync(int id)
+        {
+            using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM tb_producto WHERE id_producto = @id", conexion);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                await conexion.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
