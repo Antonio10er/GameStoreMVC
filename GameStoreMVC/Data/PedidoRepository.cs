@@ -44,6 +44,14 @@ namespace GameStoreMVC.Data
                             cmd.Parameters.AddWithValue("@precio", item.Precio);
                             cmd.ExecuteNonQuery();
                         }
+
+                        string queryStock = "UPDATE tb_producto SET stock = stock - @cantidad WHERE id_producto = @idProducto";
+                        using (SqlCommand cmdStock = new SqlCommand(queryStock, conexion, transaccion))
+                        {
+                            cmdStock.Parameters.AddWithValue("@cantidad", item.Cantidad);
+                            cmdStock.Parameters.AddWithValue("@idProducto", item.IdProducto);
+                            cmdStock.ExecuteNonQuery();
+                        }
                     }
 
                     transaccion.Commit();
