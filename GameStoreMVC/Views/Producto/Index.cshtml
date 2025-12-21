@@ -33,6 +33,21 @@
 
                             <p class="card-text small text-muted text-truncate">@item.Descripcion</p>
 
+                            <div class="mb-2">
+                                @if (item.Formato == "Digital")
+                                {
+                                    <span class="badge bg-info text-dark"><i class="bi bi-cloud-download"></i> Digital</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-dark border"><i class="bi bi-box-seam"></i> Físico</span>
+                                }
+
+                                @if (!string.IsNullOrEmpty(item.Edicion) && item.Edicion != "Estándar")
+                                {
+                                    <span class="badge bg-warning text-dark">@item.Edicion</span>
+                                }
+                            </div>
                             <div class="mt-auto">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <span class="fs-5 fw-bold text-danger">S/ @item.Precio</span>

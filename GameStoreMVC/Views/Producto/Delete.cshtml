@@ -16,8 +16,27 @@
                     <h5 class="text-danger mb-4">Estás a punto de eliminar este registro permanentemente:</h5>
 
                     <img src="@Model.ImagenUrl" class="img-thumbnail mb-3" style="height: 150px;">
+
                     <h3 class="fw-bold">@Model.Nombre</h3>
                     <p class="text-muted">@Model.Descripcion</p>
+
+                    <div class="mb-3">
+                        <span class="badge bg-secondary border">Stock: @Model.Stock</span>
+
+                        @if (Model.Formato == "Digital")
+                        {
+                            <span class="badge bg-info text-dark">Digital</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-light text-dark border">Físico</span>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.Edicion) && Model.Edicion != "Estándar")
+                        {
+                            <span class="badge bg-warning text-dark">Edición: @Model.Edicion</span>
+                        }
+                    </div>
                     <h4 class="fw-bold text-primary">S/ @Model.Precio</h4>
 
                     <hr />

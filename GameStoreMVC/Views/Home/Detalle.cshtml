@@ -1,0 +1,172 @@
+﻿@model GameStoreMVC.Models.ProductoModel
+
+@{
+    ViewData["Title"] = Model.Nombre;
+
+    string nombreCategoria = "General";
+    string etiquetaColor = "bg-secondary";
+
+    switch (Model.IdCategoria)
+    {
+        case 1: nombreCategoria = "Juegos PS5"; etiquetaColor = "bg-primary"; break;
+        case 2: nombreCategoria = "Juegos Switch"; etiquetaColor = "bg-danger"; break;
+        case 3: nombreCategoria = "Consolas"; etiquetaColor = "bg-dark"; break;
+        case 4: nombreCategoria = "Accesorios"; etiquetaColor = "bg-info"; break;
+    }
+}
+
+<div class="container mt-5 mb-5">
+
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent p-0 small">
+            <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Catálogo</a></li>
+            <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">@Model.Nombre</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            <div class="card border-0 shadow-sm text-center bg-light">
+
+                <span class="position-absolute top-0 start-0 bg-danger text-white px-3 py-1 fw-bold rounded-end mt-3 shadow-sm"
+                      style="z-index: 1;">¡Oferta!</span>
+
+                @if (Model.Formato == "Digital")
+                {
+                    <span class="position-absolute top-0 end-0 bg-info text-dark px-3 py-1 fw-bold rounded-start mt-3 shadow-sm"
+                          style="z-index: 1;"><i class="bi bi-cloud-download"></i> Digital</span>
+                }
+
+                <img src="@Model.ImagenUrl" class="img-fluid rounded p-3" alt="@Model.Nombre" style="max-height: 400px; object-fit: contain;">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h2 class="fw-bold mb-3">@Model.Nombre</h2>
+
+            <span class="badge @etiquetaColor mb-3">@nombreCategoria</span>
+
+            <div class="mb-3">
+                <span class="fs-2 fw-bold text-dark">S/ @Model.Precio.ToString("0.00")</span>
+                <span class="text-muted text-decoration-line-through ms-2">S/ @((Model.Precio * 1.2m).ToString("0.00"))</span>
+            </div>
+
+            <ul class="list-unstyled small text-secondary mb-4" style="line-height: 2;">
+                <li>
+                    <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                    <strong>Formato:</strong>
+                    @if (Model.Formato == "Digital")
+                    {
+                        <span>Código de Descarga (Email)</span>
+                    }
+                    else
+                    {
+                        <span>Físico (Caja Sellada)</span>
+                    }
+                </li>
+
+                <li><i class="bi bi-check-circle-fill me-2 text-success"></i><strong>Stock:</strong> @Model.Stock Unidades disponibles</li>
+                <li><i class="bi bi-shield-fill-check me-2 text-success"></i><strong>Garantía:</strong> 12 Meses de garantía</li>
+            </ul>
+
+            <div class="mb-4">
+                <p class="text-muted">@Model.Descripcion</p>
+            </div>
+
+            <hr class="text-muted">
+
+            @if (!string.IsNullOrEmpty(Model.Edicion) && Model.Edicion != "Estándar")
+            {
+                <div class="alert alert-warning border-warning d-flex align-items-center" role="alert">
+                    <i class="bi bi-star-fill text-warning fs-4 me-3"></i>
+                    <div>
+                        <small class="text-muted text-uppercase fw-bold">Edición Seleccionada</small>
+                        <div class="fw-bold text-dark">@Model.Edicion</div>
+                    </div>
+                </div>
+            }
+
+            <div class="d-grid gap-2 mt-4">
+                @if (Model.Stock > 0)
+                {
+                    <form asp-controller="Carrito" asp-action="Agregar" method="post" class="d-grid">
+                        <input type="hidden" name="idProducto" value="@Model.IdProducto" />
+
+                        <button type="submit" class="btn btn-warning text-dark fw-bold py-3 shadow-sm text-uppercase">
+                            <i class="bi bi-cart-plus-fill me-2"></i> Añadir al carrito
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <button class="btn btn-secondary py-3 text-uppercase" disabled>
+                        Agotado
+                    </button>
+                }
+            </div>
+
+            <div class="mt-3 small text-muted text-center">
+                Compra protegida con SSL <i class="bi bi-lock-fill"></i>
+            </div>
+        </div>
+
+        <div class="col-md-3 d-none d-md-block border-start ps-4">
+            <h6 class="text-muted mb-3 small fw-bold">TAMBIÉN TE PUEDE INTERESAR</h6>
+
+            <div class="d-flex mb-3 align-items-center">
+                <img src="https://realplaza.vtexassets.com/arquivos/ids/37374482-1200-auto?v=638858253392830000&width=1200&height=auto&aspect=true"
+                     width="60" class="rounded me-2 border">
+
+                <div>
+                    <a asp-controller="Home" asp-action="Detalle" asp-route-idProducto="16"
+                       class="text-decoration-none text-dark small fw-bold d-block">
+                        Mando DualSense White
+                    </a>
+
+                    <span class="text-warning small fw-bold">S/ 269.00</span>
+                </div>
+            </div>
+
+            <div class="alert alert-info small">
+                <i class="bi bi-info-circle me-1"></i>
+                Los juegos digitales se envían a tu correo registrado inmediatamente.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active text-dark fw-bold" data-bs-toggle="tab" data-bs-target="#desc">Descripción Detallada</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link text-muted" data-bs-toggle="tab" data-bs-target="#info">Especificaciones</button>
+                </li>
+            </ul>
+            <div class="tab-content p-4 border border-top-0 bg-white shadow-sm" id="myTabContent">
+                <div class="tab-pane fade show active text-muted" id="desc">
+                    <p><strong>@Model.Nombre</strong> ofrece una experiencia increíble. @Model.Descripcion</p>
+                    <p>Disfruta de la mejor calidad gráfica y jugabilidad en tu consola favorita.</p>
+                </div>
+                <div class="tab-pane fade" id="info">
+                    <table class="table table-sm w-50">
+                        <tr>
+                            <td class="fw-bold">Formato:</td>
+                            <td>@Model.Formato</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Edición:</td>
+                            <td>@Model.Edicion</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Categoría:</td>
+                            <td>@nombreCategoria</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

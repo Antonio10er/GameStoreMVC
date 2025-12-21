@@ -5,8 +5,23 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Registrar el repositorio ADO.NET
 builder.Services.AddScoped<ProductoRepository>();
+
+builder.Services.AddScoped<UsuarioRepository>();
+
+builder.Services.AddScoped<PedidoRepository>();
+
+// Cookies
+builder.Services.AddAuthentication("CookieAuth")
+    .AddCookie("CookieAuth", config =>
+    {
+        config.Cookie.Name = "GameStore.Cookie";
+        config.LoginPath = "/Auth/Login";
+        config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    });
+
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -14,7 +29,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -23,7 +37,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

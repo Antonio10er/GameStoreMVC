@@ -37,14 +37,38 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Formato</label>
+                                <select asp-for="Formato" class="form-select">
+                                    <option value="Físico">Físico (Caja)</option>
+                                    <option value="Digital">Digital (Código)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Edición</label>
+                                <select asp-for="Edicion" class="form-select">
+                                    <option value="Estándar">Estándar</option>
+                                    <option value="Deluxe">Deluxe / Especial</option>
+                                    <option value="Coleccionista">Coleccionista</option>
+                                    <option value="GOTY">GOTY (Game of the Year)</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">URL Imagen</label>
                             <input asp-for="ImagenUrl" class="form-control" />
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">ID Categoría</label>
-                            <input asp-for="IdCategoria" type="number" class="form-control" required />
+                            <label class="form-label fw-bold">Categoría</label>
+                            <select asp-for="IdCategoria" class="form-select">
+                                <option value="">-- Seleccione una opción --</option>
+                                <option value="1">1 - Juegos PS5</option>
+                                <option value="2">2 - Juegos Switch</option>
+                                <option value="3">3 - Consolas</option>
+                                <option value="4">4 - Accesorios</option>
+                            </select>
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">

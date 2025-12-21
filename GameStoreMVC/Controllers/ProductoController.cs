@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GameStoreMVC.Data;
 using GameStoreMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameStoreMVC.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ProductoController : Controller
     {
         private readonly ProductoRepository productoRepo;
@@ -80,5 +82,6 @@ namespace GameStoreMVC.Controllers
             await productoRepo.EliminarProductoAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

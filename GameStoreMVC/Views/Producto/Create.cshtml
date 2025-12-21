@@ -15,7 +15,7 @@
                     <form asp-action="Create" method="post">
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Nombre del Videojuego</label>
+                            <label class="form-label fw-bold">Nombre del Videojuego o Accesorio</label>
                             <input asp-for="Nombre" class="form-control" placeholder="Ej: God of War Ragnarok" required />
                         </div>
 
@@ -38,6 +38,25 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Formato</label>
+                                <select asp-for="Formato" class="form-select">
+                                    <option value="Físico">Físico (Caja)</option>
+                                    <option value="Digital">Digital (Código)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Edición</label>
+                                <select asp-for="Edicion" class="form-select">
+                                    <option value="Estándar">Estándar</option>
+                                    <option value="Deluxe">Deluxe / Especial</option>
+                                    <option value="Coleccionista">Coleccionista</option>
+                                    <option value="GOTY">GOTY (Game of the Year)</option>
+                                </select>
+                                <div class="form-text small">Para Consolas o Accesorios, selecciona 'Estándar'.</div>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">URL de la Imagen (Portada)</label>
                             <input asp-for="ImagenUrl" class="form-control" placeholder="https://..." />
@@ -45,8 +64,9 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">ID de Categoría</label>
-                            <select asp-for="IdCategoria" class="form-select">
+                            <label class="form-label fw-bold">Categoría</label>
+                            <select asp-for="IdCategoria" class="form-select" required>
+                                <option value="">-- Seleccione una opción --</option>
                                 <option value="1">1 - Juegos PS5</option>
                                 <option value="2">2 - Juegos Switch</option>
                                 <option value="3">3 - Consolas</option>

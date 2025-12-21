@@ -19,7 +19,7 @@ namespace GameStoreMVC.Data
 
             using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
             {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM tb_producto", conexion);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM tb_producto WHERE activo = 1", conexion);
                 cmd.CommandType = CommandType.Text;
 
                 await conexion.OpenAsync();
@@ -36,7 +36,11 @@ namespace GameStoreMVC.Data
                             Precio = Convert.ToDecimal(dr["precio"]),
                             Stock = Convert.ToInt32(dr["stock"]),
                             ImagenUrl = dr["imagen_url"].ToString(),
-                            IdCategoria = Convert.ToInt32(dr["id_categoria"])
+
+                            Formato = dr["formato"].ToString(),
+                            Edicion = dr["edicion"].ToString(),
+
+                            IdCategoria = Convert.ToInt32(dr["id_categoria"]),
                         });
                     }
                 }
@@ -46,7 +50,7 @@ namespace GameStoreMVC.Data
 
         public async Task AgregarProductoAsync(ProductoModel p)
         {
-            string query = "INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, id_categoria) VALUES (@nom, @des, @pre, @sto, @img, @cat)";
+            string query = "INSERT INTO tb_producto (nombre, descripcion, precio, stock, imagen_url, formato, edicion, id_categoria, activo) VALUES (@nom, @des, @pre, @sto, @img, @fmt, @edi, @cat, 1)";
 
             using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
             {
@@ -56,6 +60,9 @@ namespace GameStoreMVC.Data
                 cmd.Parameters.AddWithValue("@pre", p.Precio);
                 cmd.Parameters.AddWithValue("@sto", p.Stock);
                 cmd.Parameters.AddWithValue("@img", p.ImagenUrl ?? "");
+                cmd.Parameters.AddWithValue("@fmt", p.Formato);
+                cmd.Parameters.AddWithValue("@edi", p.Edicion);
+
                 cmd.Parameters.AddWithValue("@cat", p.IdCategoria);
 
                 await conexion.OpenAsync();
@@ -85,6 +92,8 @@ namespace GameStoreMVC.Data
                             Precio = Convert.ToDecimal(dr["precio"]),
                             Stock = Convert.ToInt32(dr["stock"]),
                             ImagenUrl = dr["imagen_url"].ToString(),
+                            Formato = dr["formato"].ToString(),
+                            Edicion = dr["edicion"].ToString(),
                             IdCategoria = Convert.ToInt32(dr["id_categoria"])
                         };
                     }
@@ -95,7 +104,7 @@ namespace GameStoreMVC.Data
 
         public async Task ActualizarProductoAsync(ProductoModel p)
         {
-            string query = "UPDATE tb_producto SET nombre=@nom, descripcion=@des, precio=@pre, stock=@sto, imagen_url=@img, id_categoria=@cat WHERE id_producto=@id";
+            string query = "UPDATE tb_producto SET nombre=@nom, descripcion=@des, precio=@pre, stock=@sto, imagen_url=@img, formato=@fmt, edicion=@edi, id_categoria=@cat WHERE id_producto=@id";
 
             using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
             {
@@ -105,6 +114,8 @@ namespace GameStoreMVC.Data
                 cmd.Parameters.AddWithValue("@pre", p.Precio);
                 cmd.Parameters.AddWithValue("@sto", p.Stock);
                 cmd.Parameters.AddWithValue("@img", p.ImagenUrl ?? "");
+                cmd.Parameters.AddWithValue("@fmt", p.Formato);
+                cmd.Parameters.AddWithValue("@edi", p.Edicion);
                 cmd.Parameters.AddWithValue("@cat", p.IdCategoria);
                 cmd.Parameters.AddWithValue("@id", p.IdProducto);
 
@@ -117,7 +128,9 @@ namespace GameStoreMVC.Data
         {
             using (SqlConnection conexion = new SqlConnection(_cadenaSQL))
             {
-                SqlCommand cmd = new SqlCommand("DELETE FROM tb_producto WHERE id_producto = @id", conexion);
+                string query = "UPDATE tb_producto SET activo = 0 WHERE id_producto = @id";
+
+                SqlCommand cmd = new SqlCommand(query, conexion);
                 cmd.Parameters.AddWithValue("@id", id);
 
                 await conexion.OpenAsync();

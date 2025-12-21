@@ -1,0 +1,161 @@
+﻿@model List<GameStoreMVC.Models.CarritoItem>
+
+@{
+    ViewData["Title"] = "Finalizar Compra";
+    bool isLoggedIn = ViewBag.IsLoggedIn ?? false;
+    decimal total = ViewBag.Total ?? 0;
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Finalizar Compra</h2>
+
+    <form asp-action="ProcesarPedido" method="post">
+        <div class="row">
+
+            <div class="col-md-7">
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Información del Cliente</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (isLoggedIn)
+                        {
+                            <div class="alert alert-success">
+                                <i class="bi bi-person-check-fill"></i> Sesión iniciada como <strong>@ViewBag.Nombre @ViewBag.Apellido</strong>
+                            </div>
+                            <input type="hidden" name="correo" value="@ViewBag.Correo" />
+                            <input type="hidden" name="nombre" value="@ViewBag.Nombre" />
+                        }
+
+                        <div class="mb-3">
+                            <label class="form-label">Correo electrónico *</label>
+                            <input type="email" name="correo" class="form-control" value="@ViewBag.Correo" @(isLoggedIn ? "readonly" : "") required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre *</label>
+                                <input type="text" name="nombre" class="form-control" value="@ViewBag.Nombre" @(isLoggedIn ? "readonly" : "") required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Apellidos *</label>
+                                <input type="text" name="apellido" class="form-control" value="@ViewBag.Apellido" @(isLoggedIn ? "readonly" : "") required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">País / Región</label>
+                                <select class="form-select">
+                                    <option selected>Perú</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" name="telefono" class="form-control" value="@ViewBag.Telefono" @(isLoggedIn ? "readonly" : "")>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Métodos de Pago</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger">@TempData["Error"]</div>
+                        }
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="metodoPago" id="pagoTarjeta" checked>
+                            <label class="form-check-label fw-bold" for="pagoTarjeta">
+                                <i class="bi bi-credit-card-2-front"></i> Tarjeta de Crédito / Débito
+                            </label>
+
+                            <div class="mt-3 p-3 bg-light rounded" id="formTarjeta">
+                                <div class="mb-2">
+                                    <label class="small text-muted">Número de Tarjeta (Simulación)</label>
+                                    <input type="text" name="tarjetaNumero" class="form-control" placeholder="0000 0000 0000 0000" maxlength="16" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="MM/YY">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="CVC">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="radio" name="metodoPago" id="pagoYape">
+                            <label class="form-check-label" for="pagoYape">Yape - Yape QR</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="metodoPago" id="pagoTransf">
+                            <label class="form-check-label" for="pagoTransf">Transferencia Bancaria</label>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-danger w-100 py-2 fs-5 fw-bold" style="background-color: #ff4500;">Realizar Pedido</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Tu pedido</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush mb-3">
+                            @foreach (var item in Model)
+                            {
+                                <li class="list-group-item px-0">
+                                    <div class="d-flex justify-content-between lh-sm">
+                                        <div class="d-flex align-items-center">
+                                            <div class="position-relative me-3">
+                                                <img src="@item.ImagenUrl" width="60" class="rounded border p-1">
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                                    @item.Cantidad
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <h6 class="my-0 text-truncate" style="max-width: 150px;">@item.Nombre</h6>
+                                                <small class="text-muted d-block">Unitario: S/ @item.Precio</small>
+
+                                                <a asp-controller="Carrito" asp-action="Eliminar" asp-route-idProducto="@item.IdProducto"
+                                                   class="text-danger small text-decoration-none fw-bold mt-1 d-inline-block">
+                                                    <i class="bi bi-trash"></i> Eliminar
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted fw-bold">S/ @item.Total.ToString("0.00")</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal</span>
+                            <strong>S/ @total.ToString("0.00")</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="fs-4">Total</span>
+                            <span class="fs-4 fw-bold text-orange" style="color: #ff4500;">S/ @total.ToString("0.00")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
